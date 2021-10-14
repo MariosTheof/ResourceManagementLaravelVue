@@ -1,26 +1,24 @@
 <template>
 
-    <div>
-        <h4>Links</h4>
+    <div class="text-center">
+        <h4>HTML Snippets</h4>
         <div class="table-responsive table-bordered movie-table">
             <table class="table" style="margin-bottom: 100px;">
                 <thead>
 
                 <tr class= "">
-                    <th>Title</th>
+                    <th>ID</th>
                     <th>Description</th>
-                    <th>Opens New Tab</th>
+                    <th>HTML Snippet</th>
                     <th>###</th>
                 </tr>
 
                 </thead>
                 <tbody>
 
-                <tr class="dark-row">
-                    <td>1</td>
-                    <td>2 </td>
-                    <td>3</td>
-                    <td>4</td>
+                <tr class="dark-row" v-for="snip in this.snippets">
+                    <td v-for="value in snip">{{ value }}</td>
+                    <td><button type="button" class="btn-primary" @click="copyToClipboard">COPY</button></td>
                 </tr>
 
                 </tbody>
@@ -34,13 +32,23 @@
 
 <script>
 export default {
+    data: function() {
+        return {
+            snippets: []
+        }
+    },
+    methods: {
+      copyToClipboard() {
+          $
+      }
+    },
     created() {
-    //     this.axios
-    //         .get('/links')
-    //         .then(response => {
-    //             console.log(response);
-    //         })
-
+        this.axios
+            .get('/snippets')
+            .then(response => {
+                this.snippets = response.data
+                console.log(response);
+            })
     }
 }
 

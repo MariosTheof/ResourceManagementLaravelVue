@@ -15,7 +15,8 @@ class CreateSnippetsTable extends Migration
     {
         Schema::create('snippets', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->text('desc');
+            $table->text('snip');
         });
     }
 

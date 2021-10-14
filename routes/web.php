@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::resource('links', \App\Http\Controllers\LinkController::class);
+Route::resource('snippets', \App\Http\Controllers\SnippetController::class);

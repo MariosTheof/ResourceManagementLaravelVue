@@ -1,21 +1,28 @@
 <template>
 
-    <div>
+    <div class="text-center">
         <h4>Links</h4>
         <div class="table-responsive table-bordered movie-table">
             <table class="table" style="margin-bottom: 100px;">
                 <thead>
 
                 <tr>
-                    <th v-for="resourceHeader in Object.keys(this.resources[0])"></th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>URL</th>
+                    <th>Opens New Tab</th>
+                    <th>#</th>
+
                 </tr>
 
                 </thead>
                 <tbody>
 
-<!--                <tr class="dark-row" v-for="x in this.resources">-->
-<!--                    <td v-for="value in x">{{ value }}</td>-->
-<!--                </tr>-->
+                <tr class="dark-row" v-for="link in this.links">
+                    <td v-for="value in link">{{ value }}</td>
+                    <td v-if="link.opens_new_tab === 1"><a :href="'https://' + link.url" target="_blank">CLICK</a></td>
+                    <td v-else><a :href="'https://' + link.url" >CLICK</a></td>
+                </tr>
 
                 </tbody>
             </table>
@@ -28,22 +35,20 @@
 
 <script>
 export default {
-    props: ['resource'],
     data: function() {
         return {
-            resources: []
+            links: []
         }
     },
     mounted() {
-        if (this.resource === 'link') {
-            this.axios
-                .get('/links')
-                .then(response => {
-                    this.resources = response.data;
-                    console.log(this.resources);
-                })
-        }
+        this.axios
+            .get('/links')
+            .then(response => {
+                this.links = response.data;
+                console.log(this.links);
+            })
     }
+
 }
 
 

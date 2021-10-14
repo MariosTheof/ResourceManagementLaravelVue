@@ -25,19 +25,14 @@ class LinkController extends Controller
         return response()->json('Link created!');
     }
 
-//    public function show($id)
-//    {
-//        $Link = Link::find($id);
-//        return response()->json($Link);
-//    }
 
-//    public function update($id, Request $request)
-//    {
-//        $Link = Link::find($id);
-//        $Link->update($request->all());
-//
-//        return response()->json('Link updated!');
-//    }
+    public function update($id, Request $request)
+    {
+        $Link = Link::find($id);
+        $Link->update($request->all());
+
+        return response()->json('Link updated!');
+    }
 
     public function destroy($id)
     {
