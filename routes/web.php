@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/visitor', function () {
+    return view('visitor');
+});
+
+Route::get('/admin', function () {
+    return view('admin');
 });
 
 Route::resource('links', \App\Http\Controllers\LinkController::class);

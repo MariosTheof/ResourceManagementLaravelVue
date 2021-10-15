@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
 
-                <tr class="dark-row" v-for="link in this.links">
+                <tr v-if="" class="dark-row" v-for="link in this.links">
                     <td v-for="value in link">{{ value }}</td>
                     <td v-if="link.opens_new_tab === 1"><a :href="'https://' + link.url" target="_blank">CLICK</a></td>
                     <td v-else><a :href="'https://' + link.url" >CLICK</a></td>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import VueRouter from "vue-router";
+
 export default {
     data: function() {
         return {
@@ -41,12 +43,18 @@ export default {
         }
     },
     mounted() {
+
         this.axios
             .get('/links')
             .then(response => {
                 this.links = response.data;
-                console.log(this.links);
             })
+    },
+    computed: {
+        isLogin() {
+
+            return this.$route.name === 'Login';
+        }
     }
 
 }

@@ -16,9 +16,11 @@
                 </thead>
                 <tbody>
 
-                <tr class="dark-row" v-for="snip in this.snippets">
-                    <td v-for="value in snip">{{ value }}</td>
-                    <td><button type="button" class="btn-primary" @click="copyToClipboard">COPY</button></td>
+                <tr class="dark-row" v-for="snip in this.snippets" :key="snip.id">
+                    <td> {{ snip.id }}</td>
+                    <td> {{ snip.desc }}</td>
+                    <td :ref="'ref_'+ snip.id"> {{ snip.snip }}</td>
+                    <td><button type="button" class="btn-primary" @click="copyToClipboard('ref_'+ snip.id)">COPY</button></td>
                 </tr>
 
                 </tbody>
@@ -38,8 +40,8 @@ export default {
         }
     },
     methods: {
-      copyToClipboard() {
-          $
+      copyToClipboard(reference) {
+          navigator.clipboard.writeText(this.$refs[reference][0].textContent);
       }
     },
     created() {
