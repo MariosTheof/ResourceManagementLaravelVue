@@ -28,6 +28,7 @@ class LinkController extends Controller
 
     public function update($id, Request $request)
     {
+//        dd($request->all(), $id);
         $Link = Link::find($id);
         $Link->update($request->all());
 
