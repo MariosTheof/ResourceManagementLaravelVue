@@ -20,8 +20,8 @@
 
                 <tr v-if="isAdmin" class="dark-row" v-for="link in this.links" >
                     <td v-for="value in link">{{ value }}</td>
-                    <td><a class="btn-dark" @click="show(link)">EDIT</a></td>
-                    <td><a class="btn-danger">DELETE</a></td>
+                    <td><a class="btn-dark" @click="showEditModal(link)">EDIT</a></td>
+                    <td><a class="btn-danger" @click="showDeleteModal(link)">DELETE</a></td>
                 </tr>
                 <tr v-if="!isAdmin" class="dark-row" v-for="link in this.links" >
                     <td v-for="value in link">{{ value }}</td>
@@ -44,11 +44,13 @@
 </template>
 
 <script>
-import LinkModal from "./LinkModal";
+import LinkModalEdit from "./LinkModalEdit";
+import LinkModalDelete from "./LinkModalDelete";
 
 export default {
     components: {
-      LinkModal
+        LinkModalEdit,
+        LinkModalDelete
     },
     data: function() {
         return {
@@ -68,12 +70,22 @@ export default {
                     this.updateKey += 1;
                 })
         },
-        show (link) {
-            this.$modal.show(LinkModal, {
+        showEditModal(link) {
+            this.$modal.show(LinkModalEdit, {
                 title: link.title,
                 url: link.url,
                 resource_id: link.id,
                 new_tab: link.opens_new_tab === 1
+            }, {},{
+                'before-close': event =>{
+                    this.fetchList()
+                }
+            })
+        },
+        showDeleteModal(link) {
+            this.$modal.show(LinkModalDelete, {
+                title: link.title,
+                resource_id: link.id,
             }, {},{
                 'before-close': event =>{
                     this.fetchList()
