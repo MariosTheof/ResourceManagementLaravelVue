@@ -19,7 +19,10 @@
                 <tbody>
 
                 <tr v-if="isAdmin" class="dark-row" v-for="link in this.links" >
-                    <td v-for="value in link">{{ value }}</td>
+                    <td>{{ link.id }}</td>
+                    <td>{{ capitalize(link.title) }}</td>
+                    <td>{{ link.url }}</td>
+                    <td>{{ link.opens_new_tab === 1 ? 'True' : 'False'  }}</td>
                     <td><a class="btn-dark" @click="showEditModal(link)">EDIT</a></td>
                     <td><a class="btn-danger" @click="showDeleteModal(link)">DELETE</a></td>
                 </tr>
@@ -32,12 +35,9 @@
                 </tbody>
             </table>
 
-<!--            <v-dialog name="resource-modal" />-->
-            <modal name="resource-modal">
-                This is my first modal
-            </modal>
+            <modal name="resource-modal" @finishedTransaction="this.hide"></modal>
 
-            <button class="btn-primary btn-lg"> Add new Link </button>
+            <button class="btn-primary btn-lg" @click="showAddModal()"> Add new Link </button>
         </div>
     </div>
 
@@ -46,9 +46,11 @@
 <script>
 import LinkModalEdit from "./LinkModalEdit";
 import LinkModalDelete from "./LinkModalDelete";
+import LinkModalAdd from "./LinkModalAdd";
 
 export default {
     components: {
+        LinkModalAdd,
         LinkModalEdit,
         LinkModalDelete
     },
@@ -62,6 +64,9 @@ export default {
         this.fetchList();
     },
     methods: {
+        capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
         fetchList() {
             this.axios
                 .get('/links')
@@ -92,9 +97,19 @@ export default {
                 }
             })
         },
-        hide () {
-            this.$modal.hide('resource-modal');
+        showAddModal() {
+          this.$modal.show(LinkModalAdd, {
 
+          }, {},{
+              'before-close': event =>{
+                  this.fetchList()
+              }
+          })
+        },
+        hide () {
+            console.log('called from parent');
+
+            this.$modal.hide('resource-modal');
         }
     },
     computed: {

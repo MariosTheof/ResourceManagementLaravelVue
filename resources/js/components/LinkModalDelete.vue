@@ -1,10 +1,10 @@
 <template>
     <div>
         <h1>{{title}}</h1>
-        <form @submit="deleteResource()">
+        <form @submit.prevent="deleteResource()">
             <h3>Do you want to delete this resource : {{ title }} ?</h3>
             <input type="hidden" :value="this.resource_id"></input>
-            <button class="btn-primary" type="submit">Submit</button>
+            <button class="btn-primary" type="submit" >Submit</button>
         </form>
     </div>
 </template>
@@ -21,10 +21,11 @@ export default {
             this.axios
                 .delete('/links/' + this.resource_id)
                 .then(response => {
-                    console.log('Deleted')
+                    console.log('Deleted');
+                    this.$modal.hide(this.$parent.name);
                 })
                 .catch(err => console.log(err))
-        }
+        },
     }
 }
 </script>

@@ -2,13 +2,13 @@
     <div>
         <h1>{{title}}</h1>
         <p>{{ url }}</p>
-        <form @submit="editResource()">
+        <form @submit.prevent="editResource()">
             <Label>Title</Label>
             <input v-model="resource.title" type="text"></input>
             <Label>URL</Label>
             <input v-model="resource.url" type="text"></input>
             <Label>Opens in a new tab</Label>
-            <input v-model="resource.new_tab" type="checkbox"></input>
+            <input v-model="resource.opens_new_tab" type="checkbox"></input>
             <button class="btn-primary" type="submit">Submit</button>
         </form>
     </div>
@@ -21,7 +21,7 @@ export default {
             resource: {
                 title: this.title,
                 url: this.url,
-                new_tab: this.new_tab
+                opens_new_tab: this.new_tab
             }
         }
     },
@@ -31,6 +31,7 @@ export default {
                 .put('/links/' + this.resource_id, this.resource)
                 .then(response => {
                     console.log('Edited')
+                    this.$modal.hide(this.$parent.name);
                 })
                 .catch(err => console.log(err))
         }

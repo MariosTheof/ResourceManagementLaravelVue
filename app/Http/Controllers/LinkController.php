@@ -28,6 +28,9 @@ class LinkController extends Controller
 
     public function update($id, Request $request)
     {
+        $editedChanges = $request->all();
+//        dd($editedChanges);
+//        $editedChanges['']
         $Link = Link::find($id);
         $Link->update($request->all());
 
