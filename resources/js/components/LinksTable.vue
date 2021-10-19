@@ -35,7 +35,7 @@
                 </tbody>
             </table>
 
-            <modal name="resource-modal" @finishedTransaction="this.hide"></modal>
+            <modal name="resource-modal"></modal>
 
             <button class="btn-primary btn-lg" @click="showAddModal()"> Add new Link </button>
         </div>

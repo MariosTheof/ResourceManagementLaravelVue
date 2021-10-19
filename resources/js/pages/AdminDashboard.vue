@@ -5,7 +5,8 @@
 <!--                <links-table v-bind:isAdmin="isAdmin"></links-table>-->
             </div>
             <div class="col"></div>
-                <html-snippets-table v-bind:isAdmin="isAdmin"></html-snippets-table>
+<!--                <html-snippets-table v-bind:isAdmin="isAdmin"></html-snippets-table>-->
+                    <pdf-file-table v-bind:isAdmin="isAdmin"></pdf-file-table>
             <div class="col"></div>
         </div>
 

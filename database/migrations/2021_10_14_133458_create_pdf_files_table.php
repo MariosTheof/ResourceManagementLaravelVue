@@ -15,7 +15,8 @@ class CreatePdfFilesTable extends Migration
     {
         Schema::create('pdf_files', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name')->nullable();
+            $table->string('file_path')->nullable();
         });
     }
 

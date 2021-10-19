@@ -28,7 +28,7 @@ export default {
     methods: {
         editResource() {
             this.axios
-                .put('/links/' + this.resource_id, this.resource)
+                .post('/links/' + this.resource_id, this.resource)
                 .then(response => {
                     console.log('Edited')
                     this.$modal.hide(this.$parent.name);
