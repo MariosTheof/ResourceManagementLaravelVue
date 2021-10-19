@@ -10,6 +10,7 @@ class Snippet extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
+        'title',
         'desc',
         'snip',
     ];

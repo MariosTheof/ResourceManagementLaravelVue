@@ -14,7 +14,12 @@
 
 <script>
 export default {
-    created() {}
+    computed: {
+        isAdmin() {
+            let url = window.location.pathname;
+            return  url.includes("admin");
+        }
+    }
 }
 
 

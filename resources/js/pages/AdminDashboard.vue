@@ -2,10 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="col">
-<!--                <links-table></links-table>-->
+<!--                <links-table v-bind:isAdmin="isAdmin"></links-table>-->
             </div>
             <div class="col"></div>
-                <html-snippets-table></html-snippets-table>
+                <html-snippets-table v-bind:isAdmin="isAdmin"></html-snippets-table>
             <div class="col"></div>
         </div>
 
@@ -14,8 +14,12 @@
 
 <script>
 export default {
-    created() {}
+    computed: {
+        isAdmin() {
+            let url = window.location.pathname;
+            return url.includes("admin");
+        }
+    }
 }
-
 
 </script>

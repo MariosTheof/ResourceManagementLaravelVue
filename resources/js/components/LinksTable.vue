@@ -54,6 +54,7 @@ export default {
         LinkModalEdit,
         LinkModalDelete
     },
+    props: ['isAdmin'],
     data: function() {
         return {
             links: [],
@@ -112,12 +113,7 @@ export default {
             this.$modal.hide('resource-modal');
         }
     },
-    computed: {
-        isAdmin() {
-            let url = window.location.pathname;
-            return  url.includes("admin");
-        }
-    }
+
 
 }
 
