@@ -1,7 +1,7 @@
 <template>
 
     <div class="text-center">
-        <h4>Links</h4>
+        <h4>Files</h4>
         <div class="table-responsive table-bordered movie-table">
             <table class="table" style="margin-bottom: 100px;" :key="updateKey">
                 <thead>
@@ -19,12 +19,17 @@
                 <tr v-if="isAdmin" class="dark-row" v-for="file in this.files" >
                     <td>{{ file.id }}</td>
                     <td>{{ capitalize(file.name) }}</td>
-                    <td>{{ file.file_path }}</td>
+                    <td>{{ file.file_path.split('/').at(-1) }}</td>
                     <td><a class="btn-dark" @click="showEditModal(file)">EDIT</a></td>
                     <td><a class="btn-danger" @click="showDeleteModal(file)">DELETE</a></td>
                 </tr>
                 <tr v-if="!isAdmin" class="dark-row" v-for="file in this.files" >
                     <td v-for="value in file">{{ value }}</td>
+
+
+                    <td><a :href="'/fileDownload/' + file.file_path.split('/').at(-1)">
+                        Download</a></td>
+
                 </tr>
 
                 </tbody>
@@ -44,9 +49,6 @@ import DeleteFile from "./DeleteFile";
 import EditFile from "./EditFile";
 
 export default {
-    components: {
-
-    },
     props: ['isAdmin'],
     data: function() {
         return {
@@ -58,6 +60,7 @@ export default {
         this.fetchList();
     },
     methods: {
+
         capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         },

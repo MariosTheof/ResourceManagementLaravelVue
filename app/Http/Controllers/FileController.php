@@ -6,6 +6,7 @@ use App\Models\PdfFile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class FileController extends Controller
 {
@@ -25,10 +26,10 @@ class FileController extends Controller
 
         if($request->file()) {
             $fileName = time().'_'.$request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public_uploads');
 
             $fileModel->name = $request->all()['title'];
-            $fileModel->file_path = '/storage/app/public/' . $filePath;
+            $fileModel->file_path = '/public/' . $filePath;
             $fileModel->save();
 
             return response()->json('PdfFile uploaded!');
@@ -46,13 +47,17 @@ class FileController extends Controller
             $fileModel = new PdfFile;
             if($request->file()) {
                 $fileName = time().'_'.$request->file_path->getClientOriginalName();
-                $filePath = $request->file('file_path')->storeAs('uploads', $fileName, 'public');
+                $filePath = $request->file('file_path')->storeAs('uploads', $fileName, 'public_uploads');
 
                 $fileModel->name = $request->all()['name'];
-                $fileModel->file_path = '/storage/app/public/' . $filePath;
-                if (!File::delete(base_path() . $PdfFile['file_path']) ){
+                $fileModel->file_path =  '/public/' . $filePath;
+
+                dump(app_path() . $PdfFile['file_path']);
+
+                if (!File::delete(base_path() .'/'. $PdfFile['file_path']) ){
                     return back()->with('error', 'failed to delete file');
                 } else {
+                    dump('1231');
                     $PdfFile->update(
                         [
                             'name' => $fileModel->name,
@@ -85,4 +90,16 @@ class FileController extends Controller
             return response()->json('PdfFile deleted!');
         }
     }
+
+    public function getDownload($filename)
+    {
+        $file= public_path(). "/uploads/" . $filename;
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return response()->download($file, $filename, $headers);
+    }
+
 }

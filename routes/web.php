@@ -25,4 +25,5 @@ Route::resource('links', \App\Http\Controllers\LinkController::class);
 Route::resource('snippets', \App\Http\Controllers\SnippetController::class);
 Route::resource('files', \App\Http\Controllers\FileController::class);
 Route::post('/fileUpdate/{id}', [\App\Http\Controllers\FileController::class, 'updateFile']);
+Route::get('/fileDownload/{file}', [\App\Http\Controllers\FileController::class, 'getDownload']);
 

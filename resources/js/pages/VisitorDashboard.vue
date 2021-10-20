@@ -2,11 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <links-table></links-table>
+                <links-table v-bind:isAdmin="isAdmin"></links-table>
             </div>
             <div class="col"></div>
-                <html-snippets-table></html-snippets-table>
-            <div class="col"></div>
+                <html-snippets-table v-bind:isAdmin="isAdmin"></html-snippets-table>
+            <div class="col">
+                <pdf-file-table v-bind:isAdmin="isAdmin"></pdf-file-table>
+            </div>
         </div>
 
     </div>

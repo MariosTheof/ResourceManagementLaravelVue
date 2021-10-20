@@ -26,7 +26,7 @@
                     <td><a class="btn-danger" @click="showDeleteModal(snip)">DELETE</a></td>
                 </tr>
 
-                <tr v-if="isAdmin" class="dark-row" v-for="snip in this.snippets" :key="snip.id">
+                <tr v-if="!isAdmin" class="dark-row" v-for="snip in this.snippets" :key="snip.id">
                     <td> {{ snip.title }}</td>
                     <td> {{ snip.id }}</td>
                     <td> {{ snip.desc }}</td>
@@ -37,13 +37,16 @@
                 </tbody>
             </table>
 
-<!--            <button class="btn-primary btn-lg" @click="showAddModal"> Add new Link </button>-->
+            <button v-if="isAdmin" class="btn-primary btn-lg" @click="showAddModal"> Add new Link </button>
         </div>
     </div>
 
 </template>
 
 <script>
+import SnippetModalEdit from "./SnippetModalEdit";
+import SnippetModalAdd from "./SnippetModalAdd";
+import SnippetModalDelete from "./SnippetModalDelete";
 
 export default {
     props: ['isAdmin'],
@@ -54,44 +57,45 @@ export default {
         }
     },
     methods: {
+      copyToClipboard(reference) {
+          navigator.clipboard.writeText(this.$refs[reference][0].textContent);
+      },
+      showEditModal(snip) {
+            this.$modal.show(SnippetModalEdit, {
+                title: snip.title,
+                desc: snip.desc,
+                resource_id: snip.id,
+                snip: snip.snip
+            }, {},{
+                'before-close': event =>{
+                    this.fetchList()
+                }
+            })
+        },
+      showDeleteModal(link) {
+            this.$modal.show(SnippetModalDelete, {
+                title: link.title,
+                resource_id: link.id,
+            }, {},{
+                'before-close': event =>{
+                    this.fetchList()
+                }
+            })
+        },
+      showAddModal() {
+        this.$modal.show(SnippetModalAdd, {
 
-    //   showEditModal(snip) {
-    //         this.$modal.show(SnippetModalEdit, {
-    //             title: snip.title,
-    //             desc: snip.desc,
-    //             resource_id: snip.id,
-    //             snip: snip.snip
-    //         }, {},{
-    //             'before-close': event =>{
-    //                 this.fetchList()
-    //             }
-    //         })
-    //     },
-    //   showDeleteModal(link) {
-    //         this.$modal.show(SnippetModalDelete, {
-    //             title: link.title,
-    //             resource_id: link.id,
-    //         }, {},{
-    //             'before-close': event =>{
-    //                 this.fetchList()
-    //             }
-    //         })
-    //     },
-    //   showAddModal() {
-    //     this.$modal.show(SnippetModalAdd, {
-    //
-    //     }, {},{
-    //         'before-close': event =>{
-    //             this.fetchList()
-    //         }
-    //     })
-    // },
+        }, {},{
+            'before-close': event =>{
+                this.fetchList()
+            }
+        })
+    },
       fetchList() {
           this.axios
               .get('/snippets')
               .then(response => {
                   this.snippets = response.data
-                  console.log(response);
               })
       }
     },

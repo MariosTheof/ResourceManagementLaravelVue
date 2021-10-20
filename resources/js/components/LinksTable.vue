@@ -37,7 +37,7 @@
 
             <modal name="resource-modal"></modal>
 
-            <button class="btn-primary btn-lg" @click="showAddModal()"> Add new Link </button>
+            <button v-if="isAdmin" class="btn-primary btn-lg" @click="showAddModal()"> Add new Link </button>
         </div>
     </div>
 
