@@ -16,6 +16,8 @@ Vue.component('links-table', require('./components/LinksTable.vue').default);
 Vue.component('html-snippets-table', require('./components/HtmlSnippetsTable.vue').default);
 Vue.component('pdf-file-table', require('./components/PdfFileTable.vue').default);
 Vue.component('Label', require('./components/Label.vue').default);
+Vue.component('edit-button', require('./components/EditButton.vue').default);
+Vue.component('delete-button', require('./components/DeleteButton.vue').default);
 
 
 const app = new Vue({

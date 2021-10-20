@@ -20,8 +20,9 @@
                     <td>{{ file.id }}</td>
                     <td>{{ capitalize(file.name) }}</td>
                     <td>{{ file.file_path.split('/').at(-1) }}</td>
-                    <td><a class="btn-dark" @click="showEditModal(file)">EDIT</a></td>
-                    <td><a class="btn-danger" @click="showDeleteModal(file)">DELETE</a></td>
+
+                    <td><edit-button @click="showEditModal(file)"></edit-button></td>
+                    <td><delete-button @click="showDeleteModal(file)"></delete-button> </td>
                 </tr>
                 <tr v-if="!isAdmin" class="dark-row" v-for="file in this.files" >
                     <td v-for="value in file">{{ value }}</td>
@@ -37,7 +38,7 @@
 
             <modal name="resource-modal"></modal>
 
-            <button class="btn-primary btn-lg" @click="showAddModal()"> Add new File </button>
+            <button v-if="isAdmin" class="btn-primary btn-lg" @click="showAddModal()"> Add new File </button>
         </div>
     </div>
 
@@ -49,6 +50,7 @@ import DeleteFile from "./DeleteFile";
 import EditFile from "./EditFile";
 
 export default {
+
     props: ['isAdmin'],
     data: function() {
         return {

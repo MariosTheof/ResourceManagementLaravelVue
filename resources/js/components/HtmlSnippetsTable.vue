@@ -22,8 +22,8 @@
                     <td> {{ snip.title }}</td>
                     <td> {{snip.desc }} </td>
                     <td> {{ snip.snip }} </td>
-                    <td><a class="btn-dark" @click="showEditModal(snip)">EDIT</a></td>
-                    <td><a class="btn-danger" @click="showDeleteModal(snip)">DELETE</a></td>
+                    <td><edit-button @click="showEditModal(snip)"></edit-button></td>
+                    <td><delete-button @click="showDeleteModal(snip)"></delete-button> </td>
                 </tr>
 
                 <tr v-if="!isAdmin" class="dark-row" v-for="snip in this.snippets" :key="snip.id">

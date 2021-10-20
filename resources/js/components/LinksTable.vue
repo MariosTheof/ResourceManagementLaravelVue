@@ -23,8 +23,8 @@
                     <td>{{ capitalize(link.title) }}</td>
                     <td>{{ link.url }}</td>
                     <td>{{ link.opens_new_tab === 1 ? 'True' : 'False'  }}</td>
-                    <td><a class="btn-dark" @click="showEditModal(link)">EDIT</a></td>
-                    <td><a class="btn-danger" @click="showDeleteModal(link)">DELETE</a></td>
+                    <td><edit-button @click="showEditModal(link)"></edit-button></td>
+                    <td><delete-button @click="showDeleteModal(link)"></delete-button> </td>
                 </tr>
                 <tr v-if="!isAdmin" class="dark-row" v-for="link in this.links" >
                     <td v-for="value in link">{{ value }}</td>
@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import LinkModalEdit from "./LinkModalEdit";
-import LinkModalDelete from "./LinkModalDelete";
-import LinkModalAdd from "./LinkModalAdd";
+import LinkModalEdit from "./LinkEdit";
+import LinkModalDelete from "./LinkDelete";
+import LinkModalAdd from "./LinkAdd";
 
 export default {
     components: {
@@ -82,7 +82,7 @@ export default {
                 url: link.url,
                 resource_id: link.id,
                 new_tab: link.opens_new_tab === 1
-            }, {},{
+            }, {'height': 300},{
                 'before-close': event =>{
                     this.fetchList()
                 }
@@ -92,7 +92,10 @@ export default {
             this.$modal.show(LinkModalDelete, {
                 title: link.title,
                 resource_id: link.id,
-            }, {},{
+            }, {
+                'height': 200,
+                'classes': 'modal-background'
+            },{
                 'before-close': event =>{
                     this.fetchList()
                 }
@@ -101,7 +104,7 @@ export default {
         showAddModal() {
           this.$modal.show(LinkModalAdd, {
 
-          }, {},{
+          }, {'height': 300},{
               'before-close': event =>{
                   this.fetchList()
               }
@@ -116,6 +119,9 @@ export default {
 
 
 }
-
-
 </script>
+<style>
+.modal-background {
+    background: antiquewhite !important;
+}
+</style>
