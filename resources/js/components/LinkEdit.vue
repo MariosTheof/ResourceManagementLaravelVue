@@ -8,7 +8,7 @@
             <input v-model="resource.url" type="text"></input>
             <Label>Opens in a new tab</Label>
             <input style="width:revert;margin-left:14rem" v-model="resource.opens_new_tab" type="checkbox"></input>
-            <button class="btn-primary" type="submit">Submit</button>
+            <button class="btn-primary modalButton" type="submit">Submit</button>
         </form>
     </div>
 </template>
@@ -29,10 +29,18 @@ export default {
             this.axios
                 .put('/links/' + this.resource_id, this.resource)
                 .then(response => {
-                    console.log('Edited')
-                    this.$modal.hide(this.$parent.name);
+                    console.log(response);
+                    if(response.data === 'error') {
+                        this.$toastr.e("Something went wrong");
+                    } else {
+                        this.$modal.hide(this.$parent.name);
+                        this.$toastr.s("Link was edited successfully", "Resource Edited" );
+                    }
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err);
+                    this.$toastr.e("Something went wrong");
+                })
         }
     }
 }

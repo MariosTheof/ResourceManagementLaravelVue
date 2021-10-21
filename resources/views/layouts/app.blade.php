@@ -15,7 +15,12 @@
 
 <main>
     <div class="topnav mb-5">
-        <a class="active" href="#home">Home</a>
+        @if (Request::is('admin*'))
+            <a class="active" href="/visitor">Switch to Visitor</a>
+        @else
+            <a class="active" href="/admin">Switch to Admin</a>
+        @endif
+
     </div>
     @yield('content')
 </main>
@@ -23,14 +28,14 @@
 </body>
 <style>
     .topnav {
-        background-color: #333;
+        background-color: #F0F4EF;
         overflow: hidden;
     }
 
     /* Style the links inside the navigation bar */
     .topnav a {
         float: left;
-        color: #f2f2f2;
+        color: #8A2BE2;
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
@@ -39,13 +44,13 @@
 
     /* Change the color of links on hover */
     .topnav a:hover {
-        background-color: #ddd;
+        background-color: #8A2BE2;
         color: black;
     }
 
     /* Add a color to the active/current link */
     .topnav a.active {
-        background-color: #04AA6D;
+        background-color: #8A2BE2;
         color: white;
     }
 </style>

@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import UploadFile from "./UploadFile";
-import DeleteFile from "./DeleteFile";
-import EditFile from "./EditFile";
+import UploadFile from "./FileAdd";
+import DeleteFile from "./FileDelete";
+import EditFile from "./FileEdit";
 
 export default {
 
@@ -64,6 +64,7 @@ export default {
     methods: {
 
         capitalize(string) {
+            if (string === null) return
             return string.charAt(0).toUpperCase() + string.slice(1);
         },
         fetchList() {
@@ -79,7 +80,10 @@ export default {
             this.$modal.show(EditFile, {
                 title: file.name,
                 resource_id: file.id,
-            }, {},{
+            }, {
+                'height': 320,
+                'classes': 'modal-background'
+            },{
                 'before-close': event =>{
                     this.fetchList()
                 }
@@ -89,7 +93,10 @@ export default {
             this.$modal.show(DeleteFile, {
                 title: file.name,
                 resource_id: file.id,
-            }, {},{
+            }, {
+                'height': 200,
+                'classes': 'modal-background'
+            },{
                 'before-close': event =>{
                     this.fetchList()
                 }
@@ -98,7 +105,10 @@ export default {
         showAddModal() {
             this.$modal.show(UploadFile, {
 
-            }, {},{
+            }, {
+                'height': 320,
+                'classes': 'modal-background'
+            },{
                 'before-close': event =>{
                     this.fetchList();
                 }

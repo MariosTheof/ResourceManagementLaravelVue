@@ -5,10 +5,11 @@ window.Vue = require('vue').default;
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VModal from 'vue-js-modal'
+import VueToastr from "vue-toastr";
 
 Vue.use(VueAxios, axios)
 Vue.use(VModal)
-
+Vue.use(VueToastr)
 
 Vue.component('visitor-dashboard', require('./pages/VisitorDashboard.vue').default);
 Vue.component('admin-dashboard', require('./pages/AdminDashboard.vue').default);

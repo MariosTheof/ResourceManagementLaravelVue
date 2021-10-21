@@ -5,7 +5,7 @@
         <form @submit.prevent="deleteResource()">
             <h3>Do you want to delete this resource : {{ title }} ?</h3>
             <input type="hidden" :value="this.resource_id"></input>
-            <button class="btn-danger" type="submit" >Delete</button>
+            <button class="btn-danger" style="float:right;background: #c51f1a!important;" type="submit" >Delete</button>
         </form>
     </div>
 </template>
@@ -22,10 +22,17 @@ export default {
             this.axios
                 .delete('/links/' + this.resource_id)
                 .then(response => {
-                    console.log('Deleted');
-                    this.$modal.hide(this.$parent.name);
+                    if(response.data === 'error') {
+                        this.$toastr.e("Something went wrong");
+                    } else {
+                        this.$modal.hide(this.$parent.name);
+                        this.$toastr.s("Link was deleted successfully", "Resource Deleted" );
+                    }
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err);
+                    this.$toastr.e("Something went wrong");
+                })
         },
     }
 }

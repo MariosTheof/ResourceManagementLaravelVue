@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Link;
+use PHPUnit\Exception;
 
 class LinkController extends Controller
 {
@@ -15,31 +17,44 @@ class LinkController extends Controller
 
     public function store(Request $request)
     {
-        $Link = new Link([
-            'title' => $request->input('title'),
-            'url' => $request->input('url'),
-            'opens_new_tab' => $request->input('opens_new_tab'),
-        ]);
-        $Link->save();
+        try {
+            $Link = new Link([
+                'title' => $request->input('title'),
+                'url' => $request->input('url'),
+                'opens_new_tab' => $request->input('opens_new_tab'),
+            ]);
+            $Link->save();
 
-        return response()->json('Link created!');
+            return response()->json('Link created!');
+        }catch (\Exception $e) {
+            return response()->json('error');
+        }
+
     }
 
 
     public function update($id, Request $request)
     {
-        $Link = Link::find($id);
-        $Link->update($request->all());
+        try {
+            $Link = Link::find($id);
+            $Link->update($request->all());
 
-        return response()->json('Link updated!');
+            return response()->json('Link updated!');
+        } catch (\Exception $e) {
+            return response()->json('error');
+        }
     }
 
     public function destroy($id)
     {
-        $Link = Link::find($id);
-        $Link->delete();
+        try {
+            $Link = Link::find($id);
+            $Link->delete();
 
-        return response()->json('Link deleted!');
+            return response()->json('Link deleted!');
+        } catch (\Exception $e) {
+            return response()->json('error');
+        }
     }
 
 }

@@ -16,30 +16,45 @@ class SnippetController extends Controller
 
     public function store(Request $request)
     {
-        $Snippet = new Snippet([
-            'title' => $request->input('title'),
-            'desc' => $request->input('desc'),
-            'snip' => $request->input('snip'),
-        ]);
-        $Snippet->save();
+        try {
+            $Snippet = new Snippet([
+                'title' => $request->input('title'),
+                'desc' => $request->input('desc'),
+                'snip' => $request->input('snip'),
+            ]);
+            $Snippet->save();
 
-        return response()->json('Snippet created!');
+            return response()->json('Snippet created!');
+        } catch (\Exception $e) {
+            return response()->json('error');
+        }
+
     }
 
 
     public function update($id, Request $request)
     {
-        $Snippet = Snippet::find($id);
-        $Snippet->update($request->all());
+        try {
+            $Snippet = Snippet::find($id);
+            $Snippet->update($request->all());
 
-        return response()->json('Snippet updated!');
+            return response()->json('Snippet updated!');
+        } catch (\Exception $e) {
+            return response()->json('error');
+        }
+
     }
 
     public function destroy($id)
     {
-        $Snippet = Snippet::find($id);
-        $Snippet->delete();
+        try {
+            $Snippet = Snippet::find($id);
+            $Snippet->delete();
 
-        return response()->json('Snippet deleted!');
+            return response()->json('Snippet deleted!');
+        } catch (\Exception $e) {
+            return response()->json('error');
+        }
+
     }
 }
